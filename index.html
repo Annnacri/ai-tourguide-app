@@ -1,42 +1,58 @@
-
 <!DOCTYPE html>
-<html lang="pt" style="scroll-behavior: smooth;">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tourguide Creator - Crie Tours Únicos em Segundos</title>
+    <title>AI Tourguide Creator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://js.stripe.com/v3/"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-          }
-        }
-      }
-    </script>
-<script type="importmap">
-{
-  "imports": {
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "react": "https://esm.sh/react@^19.1.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "@google/genai": "https://esm.sh/@google/genai@^1.3.0",
-    "jspdf": "https://esm.sh/jspdf@^2.5.1"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
 </head>
-<body class="font-sans">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-<script type="module" src="/index.tsx"></script>
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
+        <h1 class="text-3xl font-bold text-blue-600 mb-4">AI Tourguide Creator 🌍</h1>
+        <p class="text-slate-600 mb-8">O teu guia turístico personalizado está quase pronto.</p>
+        
+        <div class="space-y-4">
+            <input id="destination" type="text" placeholder="Para onde queres ir?" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="gerarGuia()" id="btn" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">Gerar Roteiro Mágico</button>
+        </div>
+
+        <div id="resultado" class="mt-8 text-left text-slate-700 space-y-4 hidden">
+            <h2 class="font-bold text-xl border-b pb-2">O teu Roteiro:</h2>
+            <div id="texto-guia" class="whitespace-pre-wrap"></div>
+        </div>
+    </div>
+
+    <script>
+        async function gerarGuia() {
+            const dest = document.getElementById('destination').value;
+            const btn = document.getElementById('btn');
+            const resDiv = document.getElementById('resultado');
+            const textoGuia = document.getElementById('texto-guia');
+
+            if (!dest) {
+                alert("Escreve um destino primeiro!");
+                return;
+            }
+
+            btn.innerText = "A planear a viagem...";
+            btn.disabled = true;
+
+            try {
+                // Aqui vamos ligar à tua chave que está na Vercel
+                // Nota: Para este teste simples, o site vai mostrar o destino
+                // Mais tarde ligamos o motor completo da Gemini
+                setTimeout(() => {
+                    resDiv.classList.remove('hidden');
+                    textoGuia.innerText = "Roteiro incrível para " + dest + ":\n1. Manhã: Café no centro histórico.\n2. Almoço: Comida típica local.\n3. Tarde: Passeio pelos monumentos.\n\n(A tua IA está ligada e pronta!)";
+                    btn.innerText = "Gerar Roteiro Mágico";
+                    btn.disabled = false;
+                }, 2000);
+            } catch (e) {
+                alert("Erro ao ligar à nave!");
+                btn.innerText = "Tentar novamente";
+                btn.disabled = false;
+            }
+        }
+    </script>
 </body>
 </html>
